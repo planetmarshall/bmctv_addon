@@ -6,7 +6,16 @@ import os.path
 import argparse
 
 includes = [
-    "resources",
+    "resources/img/award.png",
+"resources/img/bmc.png",
+"resources/img/climbing.png",
+"resources/img/competitions.png",
+"resources/img/films.png",
+"resources/img/gear.png",
+"resources/img/kmf.png",
+"resources/img/mountaineering.png",
+"resources/img/skills.png",
+"resources/img/walking.png",
     "addon.xml",
     "bmctv.py",
     "bmctv_main.py",

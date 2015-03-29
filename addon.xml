@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<addon id="video.plugins.bmctv" name="BMC TV" version="0.0.11" provider-name="Andrew Marshall">
+<addon id="video.plugins.bmctv" name="BMC TV" version="0.0.25" provider-name="Andrew Marshall">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="script.module.beautifulsoup4" version="4.3.1"/>
+        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
         </requires>
     <extension point="xbmc.python.pluginsource" library="bmctv_main.py">
     <provides>video</provides>
