@@ -16,12 +16,14 @@ includes = [
 "resources/img/mountaineering.png",
 "resources/img/skills.png",
 "resources/img/walking.png",
+"resources/img/Icons.md",
     "addon.xml",
     "bmctv.py",
     "bmctv_main.py",
     "changelog.txt",
     "icon.png",
-    "LICENSE.txt"
+    "LICENSE.txt",
+    "storageserverdummy.py"
 ]
 
 package = "plugin.video.bmctv"
