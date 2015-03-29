@@ -7,6 +7,12 @@ import xbmc
 import bmctv
 import urllib2
 
+try:
+    import StorageServer
+except:
+    import storageserverdummy as StorageServer
+cache = StorageServer.StorageServer("plugin.video.bmctv", 24)
+
 plugin_url = sys.argv[0]
 addon_handle = int(sys.argv[1])
 xbmcplugin.setContent(addon_handle, 'movies')
@@ -26,6 +32,18 @@ bmc_home = "http://" + bmc_root
 args = urlparse.parse_qs(sys.argv[2][1:])
 mode = args.get('mode', None)
 
+def read_all(pages, channel_link):
+    list_items = []
+    for i in range(1,pages+1):
+        page_url = bmctv.build_url(channel_link,i)
+        xbmc.log("BMCTV : Reading HTML from " + page_url)
+        available_videos = cache.cacheFunction(bmctv.available_videos,read_html(page_url))
+
+        for title, info in available_videos.iteritems():
+            item_url = bmctv.build_item_url(plugin_url, info )
+            list_items.append({"title":title, "url":item_url, "info":info})
+    return list_items
+
 if mode is None:
     # startup index page
     channels = bmctv.available_channels(read_html(bmctv.build_url("/",1)))
@@ -41,18 +59,13 @@ elif mode[0] == "channel":
     channel=args.get('channel')[0]
     channel_link = args.get('link')[0]
     pages = bmctv.available_pages(read_html(bmctv.build_url(channel_link,1)))
-    for i in range(1,pages+1):
-        list_items = []
-        page_url = bmctv.build_url(channel_link,i)
-        xbmc.log("BMCTV : Reading HTML from " + page_url)
-        available_videos = bmctv.available_videos(read_html(page_url))
-        
-        for title, info in available_videos.iteritems():
-            li = xbmcgui.ListItem(label=title, thumbnailImage=info["thumbnail"])
-            item_url = bmctv.build_item_url(plugin_url, info )
-            list_items.append((item_url, li,True))
+    list_items = []
+    for item in cache.cacheFunction(read_all,pages,channel_link):
+        info = item["info"]
+        li = xbmcgui.ListItem(label=item["title"], thumbnailImage=info["thumbnail"])
+        list_items.append((item["url"], li,True))
 
-        xbmcplugin.addDirectoryItems(addon_handle,list_items)
+    xbmcplugin.addDirectoryItems(addon_handle,list_items)
     xbmcplugin.endOfDirectory(addon_handle)
 
 
