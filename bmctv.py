@@ -53,6 +53,8 @@ def build_url(channel, page):
 def available_pages(text):
     bs = BeautifulSoup(text, "html.parser")
     last_page = bs.find("li",class_="last")
+    if not last_page:
+        return 1
     return int(page_expr.search(last_page.a["href"]).group(0))
 
 def available_videos(text):

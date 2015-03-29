@@ -62,6 +62,7 @@ elif mode[0] == "video":
     li = xbmcgui.ListItem(
         label=video_info.title,
         label2=video_info.summary,
+        iconImage=video_info.image,
         thumbnailImage=video_info.image)
     # TODO
     li.setInfo('video', {
