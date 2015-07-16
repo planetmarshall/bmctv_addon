@@ -62,7 +62,7 @@ elif mode[0] == "channel":
     list_items = []
     for item in cache.cacheFunction(read_all,pages,channel_link):
         info = item["info"]
-        li = xbmcgui.ListItem(label=item["title"], thumbnailImage=info["thumbnail"])
+        li = xbmcgui.ListItem(label=item["title"], thumbnailImage=info["thumbnail"],iconImage=info["thumbnail"] )
         list_items.append((item["url"], li,True))
 
     xbmcplugin.addDirectoryItems(addon_handle,list_items)
